@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 // const db = require('./database/db')
 // Express APIs
-const api = require('./routes/route')
+const user = require('./routes/route')
 //connexion to database
 mongoose
   .connect("mongodb://127.0.0.1:27017/Users")
@@ -27,21 +27,22 @@ app.use(cors())
 
 // Serve static resources
 app.use('/public', express.static('public'))
-app.use('/api', api)
+app.use('/user', user)
 
 // Define PORT
-const port = process.env.PORT || 4000
+//changement de port pour tester
+const port = process.env.PORT || 4300
 
-const server =app.listen(port, () => {
+app.listen(port, () => {
   console.log('Connected to port ' + port)
 })
 
 // Express error handling
-app.use((next) => {
-  setImmediate(() => {
-    next(new Error('Something went wrong'))
-  })
-})
+// app.use((next) => {
+//   setImmediate(() => {
+//     next(new Error('Something went wrong'))
+//   })
+// })
 
 app.use(function (err, res) {
   console.error(err.message)

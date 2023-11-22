@@ -69,7 +69,7 @@ router.post('/signin', (req, res, next) => {
       console.log(user+ "itération avant!user")
       if (!user) {
         return res.status(401).json({
-          message: 'Authentication  process is a failure, user doesnot figure in the database',
+          message: 'Authentication  process is a failure, user does not figure in the database',
         })
       }
       else {
@@ -88,6 +88,7 @@ router.post('/signin', (req, res, next) => {
           email: getUser.email,
           userId: getUser._id,
         },
+        //token
         'longer-secret-is-better',
         {
           expiresIn: '2h',
@@ -100,8 +101,9 @@ router.post('/signin', (req, res, next) => {
       })
     })
     .catch((err) => {
-      return res.status(401).json({
+      res.status(401).json({
         message: 'Authentication  process is a failure 3',
+        error: err
       })
     })
 })

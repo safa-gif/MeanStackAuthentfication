@@ -8,7 +8,7 @@ import {Observable, catchError, map, throwError} from 'rxjs';
 })
 export class AuthServiceService {
   // specify the endpoint
-  endpoint: string = "http://localhost:4000/api";
+  endpoint: string = "http://localhost:4300/user";
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   currentUser = {};
 
@@ -51,6 +51,7 @@ export class AuthServiceService {
   // User profile
   getUserProfile(id: any): Observable<any> {
     let api = `${this.endpoint}/user-profile/${id}`;
+    console.log(api)
     return this.http.get(api, { headers: this.headers }).pipe(
       map((res: any) => {
         return res || {};
