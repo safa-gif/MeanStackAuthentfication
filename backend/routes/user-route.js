@@ -31,7 +31,7 @@ router.post(
 
     // au cas ou les erreurs existent elles seront rajoutées au tableau et status 422
     if (!errors.isEmpty()) {
-      return res.status(422).jsonp(errors.array())
+      res.status(422).jsonp(errors.array())
     } else {
       //sinon nous allons crypter le mot de passe sur 10 bits et stocké le hash
       bcrypt.hash(req.body.password, 10).then((hash) => {
@@ -126,7 +126,7 @@ router.route('/user-profile/:id').get(authorize, (req, res, next) => {
 
 userSchema.findById({_id: req.params.id})
 .then((data)=>{
-  return res.status(200).json({msg: data   });
+  return res.status(200).json({msg: data });
 })
 .catch((error)=> {
   console.log('Error in getting the user profile : ',error)

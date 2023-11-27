@@ -19,15 +19,17 @@ export class AuthServiceService {
     let api = `${this.endpoint}/register-user`;
     return this.http.post(api, user).pipe(catchError(this.handleError));
   }
+  //Access Token
   getToken() {
     return localStorage.getItem('access_token');
   }
-
+// Authorized token
   get isLoggedIn(): boolean {
     let authToken = localStorage.getItem('access_token');
     return authToken !== null ? true : false;
   }
 
+  //Logout
   doLogout() {
     let removeToken = localStorage.removeItem('access_token');
     if (removeToken == null) {
@@ -41,9 +43,9 @@ export class AuthServiceService {
       .post<any>(`${this.endpoint}/signin`, user)
       .subscribe((res: any) => {
         localStorage.setItem('access_token', res.token);
-        this.getUserProfile(res.id).subscribe((res) => {
+        this.getUserProfile(res._id).subscribe((res) => {
           this.currentUser = res;
-          this.router.navigate(['user-profile/' + res.msg.id]);
+          this.router.navigate(['user-profile/' + res.msg._id]);
         });
       });
   }
@@ -51,8 +53,7 @@ export class AuthServiceService {
   // User profile
   getUserProfile(id: any): Observable<any> {
     let api = `${this.endpoint}/user-profile/${id}`;
-    console.log(api)
-    return this.http.get(api, { headers: this.headers }).pipe(
+       return this.http.get(api, { headers: this.headers }).pipe(
       map((res: any) => {
         return res || {};
       }),
