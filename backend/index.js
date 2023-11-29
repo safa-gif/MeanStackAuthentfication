@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 // const db = require('./database/db')
 // Express APIs
 const userRoute = require('./routes/user-route')
+const quesRoute = require('./routes/question-route')
 //connexion to database
 mongoose
   .connect("mongodb://127.0.0.1:27017/Users")
@@ -28,7 +29,7 @@ app.use(cors())
 // Serve static resources
 app.use('/public', express.static('public'))
 app.use('/user', userRoute)
-
+app.use('/question', quesRoute)
 // Define PORT
 //changement de port pour tester
 const port = process.env.PORT || 4300
@@ -38,11 +39,11 @@ app.listen(port, () => {
 })
 
 // Express error handling
-// app.use((next) => {
-//   setImmediate(() => {
-//     next(new Error('Something went wrong'))
-//   })
-// })
+app.use((next) => {
+  setImmediate(() => {
+    next(new Error('Something went wrong'))
+  })
+})
 
 app.use(function (err, res) {
   console.error(err.message)
